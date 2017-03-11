@@ -31,9 +31,12 @@ export class HomePage {
     this.tasks.push({task:'task5', priority:'normal', status:'pending'});
 
     this.dbservice = dbsrv;
-    // if (this.dbservice.isDBReady()) {
-    //     this.showTask();
-    // }
+    this.dbservice.openDatabase();
+    //this.showTask();
+  }
+
+  ionviewDidLoad() {
+    this.showTask();
   }
 
   public showTask() {

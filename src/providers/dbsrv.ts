@@ -22,10 +22,24 @@ export class Dbsrv {
 
     this.platform = platform;
     this.isDBOpen = false;
-    this.openDatabase();
+    //this.openDatabase();
   }
 
   openDatabase() {
+    this.storage = new SQLite();
+
+    // console.log('Opening database.');
+    // this.storage.openDatabase({
+    //   name: 'data.db',
+    //   location: 'default' // the location field is required
+    // });
+    // console.log('Opened database.');
+    //
+    // this.storage.executeSql('create table IF NOT EXISTS tbtask (id integer primary key autoincrement, task text, priority text, status text)', {});
+    // console.log('Created table.');
+    //
+    // this.isDBOpen = true;
+
     if (!this.isDBOpen) {
       this.platform.ready()
       .then(() => {
