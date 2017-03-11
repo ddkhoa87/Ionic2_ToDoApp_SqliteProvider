@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ViewController } from 'ionic-angular';
 import { HomePage } from '../home/home';
 /*
   Generated class for the Modal page.
@@ -13,13 +13,14 @@ import { HomePage } from '../home/home';
 })
 export class ModalPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ModalPage');
   }
 
   close(){
-    this.navCtrl.push(HomePage);
+    //this.navCtrl.push(HomePage);
+    this.viewCtrl.dismiss();
   }
 }

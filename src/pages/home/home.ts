@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 
-import { NavController, NavParams, ViewController } from 'ionic-angular';
+import { NavController, NavParams, ViewController, ModalController } from 'ionic-angular';
 
 import { ModalPage } from '../modal/modal';
 
-import { Platform } from 'ionic-angular';
 import { Dbsrv } from '../../providers/dbsrv';
 
 @Component({
@@ -17,22 +16,14 @@ export class HomePage {
   nav : NavController;
   dbservice : Dbsrv;
   isDBServiceReady: boolean;
-  platform : Platform;
 
-  constructor(public navCtrl: NavController, private dbsrv : Dbsrv, platform: Platform) {
-    this.platform = platform;
+  constructor(public navCtrl: NavController, private dbsrv : Dbsrv, public modalCtrl: ModalController) {
 
     this.nav = navCtrl;
     this.tasks = [];
-    this.tasks.push({task:'task1', priority:'low', status:'pending'});
-    this.tasks.push({task:'task2', priority:'high', status:'pending'});
-    this.tasks.push({task:'task3', priority:'normal', status:'pending'});
-    this.tasks.push({task:'task4', priority:'low', status:'done'});
-    this.tasks.push({task:'task5', priority:'normal', status:'pending'});
 
     this.dbservice = dbsrv;
     this.dbservice.openDatabase();
-    //this.showTask();
   }
 
   ionviewDidLoad() {
@@ -61,6 +52,9 @@ export class HomePage {
   }
 
   showModal(){
-    this.navCtrl.push(ModalPage);
+    //this.navCtrl.push(ModalPage);
+    let modal = this.modalCtrl.create(ModalPage);
+    modal.present();
+    //let modal = Modal.create(ModalPage);
   }
 }
