@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ViewController } from 'ionic-angular';
-import { HomePage } from '../home/home';
+import { NavController, NavParams, ViewController, Alert } from 'ionic-angular';
+import { Dbsrv } from '../../providers/dbsrv';
 /*
   Generated class for the Modal page.
 
