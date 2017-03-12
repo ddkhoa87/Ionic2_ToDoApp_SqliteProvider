@@ -23,10 +23,25 @@ export class HomePage {
     this.tasks = [];
 
     this.dbservice = dbsrv;
-    this.dbservice.openDatabase();
+    this.dbservice.openDatabase()
+    .then ( (result) => {
+      //this.tasks = <Array<Object>> result
+      //this.dbservice.getTasks();
+    });
   }
 
   ionviewDidLoad() {
+    console.log('ionviewDidLoad HomePage');
+    this.showTask();
+  }
+
+  ionViewDidEnter() {
+    console.log('ionviewDidEnter HomePage');
+    //this.showTask();
+  }
+
+  ionViewDidLeave() {
+    console.log('ionviewDidLeave HomePage');
     this.showTask();
   }
 
