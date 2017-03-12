@@ -25,8 +25,7 @@ export class HomePage {
     this.dbservice = dbsrv;
     this.dbservice.openDatabase()
     .then ( (result) => {
-      //this.tasks = <Array<Object>> result
-      //this.dbservice.getTasks();
+      this.tasks = <Array<Object>> result;
     });
   }
 

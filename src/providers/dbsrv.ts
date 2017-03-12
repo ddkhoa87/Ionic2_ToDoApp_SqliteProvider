@@ -22,33 +22,37 @@ export class Dbsrv {
 
     this.platform = platform;
     this.isDBOpen = false;
-    //this.openDatabase();
   }
 
   openDatabase() {
-    this.storage = new SQLite();
 
-    if (!this.isDBOpen) {
+    return new Promise(resolve => {
+      this.storage = new SQLite();
       this.platform.ready()
-      .then(() => {
-          this.storage = new SQLite();
-          console.log('Opening database.');
-          this.storage.openDatabase({
-            name: 'data.db',
-            location: 'default' // the location field is required
-          })
-          .then(() => {
-              console.log('Opened database.');
-              //this.storage.executeSql('create table IF NOT EXISTS tbtask (id integer primary key autoincrement, task text, priority text, status text)', {})
-              this.storage.executeSql('create table IF NOT EXISTS tbtask (id iteger primary key autoincrement, ask text, priority text, status text)', {})
-              .then(()=>{
-                  console.log('Created table.');
-                  this.isDBOpen = true;
-                  return this.getTasks();
-              });
+      .then ( () => {
+        this.storage = new SQLite();
+        console.log('Opening database.');
+
+        this.storage.openDatabase({
+          name: 'data.db',
+          location: 'default' // the location field is required
+        })
+        .then ( () => {
+          console.log('Opened database.');
+
+          this.storage.executeSql('create table IF NOT EXISTS tbtask (id iteger primary key autoincrement, ask text, priority text, status text)', {})
+          .then(()=>{
+            console.log('Created table.');
+            this.isDBOpen = true;
+            this.getTasks().
+            then ( (tasks) => {
+              resolve(tasks);
+            });
+
           });
+        });
       });
-    }
+    });
   }
 
   public getTasks() {
@@ -56,8 +60,7 @@ export class Dbsrv {
     return new Promise ( (resolve, reject) => {
         this.storage.executeSql('select * from tbtask',{})
         .then( (data) => {
-          var tasks = [];
-          console.log(data.rows.length);
+          let tasks = [];
           if (data.rows.length > 0) {
             for (var i = 0; i < data.rows.length; i++) {
               tasks.push({
@@ -79,11 +82,6 @@ export class Dbsrv {
   public saveTask(item) {
     console.log('Saving task...');
     console.log(item.task);
-    //return this.storage.executeSql('insert into tbltask (task, priority, status) values (?, ?, ?)',
-    //                              [item.task, item.priority, 'pending']);
-
-    // return this.storage.executeSql('insert into tbltask (task, priority, status) values \
-    //                               (\'' + item.task + '\', \'' + item.priority + '\', \'pending\')',[]);
 
     return new Promise ( (resolve, reject) => {
       this.storage.executeSql('insert into tbtask (task, priority, status) values \
